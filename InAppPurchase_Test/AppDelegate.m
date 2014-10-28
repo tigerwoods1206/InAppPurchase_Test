@@ -17,6 +17,12 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    NSURL *receiptURL = [[NSBundle mainBundle] appStoreReceiptURL];
+    NSData *receiptData = [NSData dataWithContentsOfURL:receiptURL];
+    NSString *base64Encoded = [receiptData base64EncodedStringWithOptions:0];
+   
+    NSLog(@"Decoded: %@", base64Encoded);
+    
     return YES;
 }
 
