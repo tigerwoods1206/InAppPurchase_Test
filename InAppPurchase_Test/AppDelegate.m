@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "CheckReceipt.h"
 
 @interface AppDelegate ()
 
@@ -17,11 +18,28 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    NSURL *receiptURL = [[NSBundle mainBundle] appStoreReceiptURL];
-    NSData *receiptData = [NSData dataWithContentsOfURL:receiptURL];
-    NSString *base64Encoded = [receiptData base64EncodedStringWithOptions:0];
+    CheckReceipt *chk = [[CheckReceipt alloc] init];
+    if (![chk checkAll]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"エラー"
+                                                        message:@"不正なレシートです。"
+                                                       delegate:nil
+                                              cancelButtonTitle:nil
+                                              otherButtonTitles:@"OK", nil];
+        [alert show];
+    }
+    else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"おめでとう。"
+                                                        message:@"正しいレシートです。"
+                                                       delegate:nil
+                                              cancelButtonTitle:nil
+                                              otherButtonTitles:@"OK", nil];
+        [alert show];
+    }
+    
+    
+    //NSString *base64Encoded = [receiptData base64EncodedStringWithOptions:0];
    
-    NSLog(@"Decoded: %@", base64Encoded);
+   // NSLog(@"Decoded: %@", base64Encoded);
     
     return YES;
 }

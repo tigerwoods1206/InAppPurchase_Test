@@ -52,7 +52,7 @@
 - (void)startInAppPurchase
 {
     // com.companyname.application.productidは、「1-1. iTunes ConnectでManage In-App Purchasesの追加」で作成したProduct IDを設定します。
-    NSSet *set = [NSSet setWithObjects:@"com.isao.inapppurchasetest.payment_item1 ", nil];
+    NSSet *set = [NSSet setWithObjects:@"com.isao.inapppurchasetest.not_payment_item1", nil];
     SKProductsRequest *productsRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:set];
     productsRequest.delegate = self;
     [productsRequest start];
