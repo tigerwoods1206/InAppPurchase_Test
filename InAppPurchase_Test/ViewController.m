@@ -227,5 +227,32 @@
 }
 
 
+- (UIView *)pickerView:(UIPickerView *)pickerView
+            viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view {
+    
+    UILabel *retval = (id)view;
+    if (!retval) {
+        retval= [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, [pickerView rowSizeForComponent:component].width, [pickerView rowSizeForComponent:component].height)];
+    }
+    retval.text = [pays objectAtIndex:row];
+    
+    // フォントサイズを設定する
+    if ([retval.text length] > 20) {
+        retval.font = [UIFont systemFontOfSize:10];
+    }
+    else if ([retval.text length] > 16) {
+        retval.font = [UIFont systemFontOfSize:12];
+    }
+    else if ([retval.text length] > 12) {
+        retval.font = [UIFont systemFontOfSize:16];
+    }
+    else {
+        retval.font = [UIFont systemFontOfSize:20];
+    }
+    
+    return retval;
+}
+
+
 
 @end
