@@ -7,13 +7,11 @@
 //
 
 #import "CheckReceipt.h"
-#include <openssl/md5.h>
-#include <openssl/sha.h>
 #include <openssl/x509.h>
 #include <openssl/pkcs7.h>
-#include <openssl/objects.h>
 #include <openssl/err.h>
 #include "Payload.h"
+#import "DecodeReceipt.h"
 
 
 @interface CheckReceipt () {
@@ -21,11 +19,14 @@
     NSURL  *receiptURL;
     NSData *receiptBinary;
     PKCS7  *p7;
+    NSMutableArray *receiptarr;
     
-    OCTET_STRING_t *bundle_id;// = NULL;
-    OCTET_STRING_t *bundle_version;// = NULL;
-    OCTET_STRING_t *opaque;// = NULL;
-    OCTET_STRING_t *hash;// = NULL;
+    //data for check receipt
+    OCTET_STRING_t *bundle_id;
+    OCTET_STRING_t *bundle_version;
+    OCTET_STRING_t *opaque;
+    OCTET_STRING_t *hash;
+    
 }
 
 @end
@@ -37,27 +38,23 @@
     if (self) {
         curentStage = kNone;
         receiptBinary = nil;
+        receiptarr = [NSMutableArray array];
     }
     
     return self;
 }
 
-NSData *appleRootCert(void) {
-    // Obtain the Apple Inc. root certificate from http://www.apple.com/certificateauthority/
-    // Download the Apple Inc. Root Certificate ( http://www.apple.com/appleca/AppleIncRootCertificate.cer )
-    // Add the receipt to your app's resource bundle.
-    NSData *cert = [NSData dataWithContentsOfURL:[[NSBundle mainBundle] URLForResource:@"AppleIncRootCertificate" withExtension:@"cer"]];
-    return cert;
-}
-
 -(BOOL)checkAll {
+    ERR_load_PKCS7_strings();
+    ERR_load_X509_strings();
+    OpenSSL_add_all_digests(); // PKCS7_verify 関数の動作に必須です。
     
-    BOOL stage = [self checkPosition];
-    stage = [self checkSignature];
-    stage = [self checkBundleID];
-    stage = [self checkBundleVersion];
-    stage = [self checkGUID];
-    return stage;
+    BOOL stage = [self checkPosition]; //レシートの存在チェックをします。
+    stage = [self checkSignature]; //アップルルート証明書を使った署名の確認
+    stage = [self checkBundleID]; //レシートのBundleIDとInfo.plistのBundleIDの一致確認
+    stage = [self checkBundleVersion]; //レシートとInfo.plistのBundleVesionの一致確認
+    stage = [self checkGUID]; //レシートとデバイスのGUIDの一致確認
+    return stage; //全部のチェックを通ればOK
 }
 
 
@@ -78,8 +75,6 @@ NSData *appleRootCert(void) {
     if (receiptURL==nil) {
         return NO;
     }
-    
-    OpenSSL_add_all_digests(); // Required for PKCS7_verify to work
     
     /* PKCS #7コンテナ(レシート)と確認の出力*/
     BIO *b_p7;
@@ -164,8 +159,25 @@ NSData *appleRootCert(void) {
             case 5:
                 hash = &entry->value;
                 break;
+            case 17:
+            {
+                OCTET_STRING_t *string = &entry->value;
+                NSLog(@"%ld",entry->type);
+                NSData *data = [NSData dataWithBytes:string->buf length:(NSUInteger)string->size];
+                DecodeReceipt *dec = [[DecodeReceipt alloc] init];
+                [receiptarr addObject:[dec decode:data]];
+                break;
+            }
+            case 19:
+                NSLog(@"%ld",entry->type);
+            case 21:
+                NSLog(@"%ld",entry->type);
+                break;
         }
     }
+    
+    _receiptDetail = receiptarr;
+    
     NSString *receiptBundleIdString = [[NSString alloc] initWithBytes:bundle_id->buf +2
                                                                length:bundle_id->size -2
                                                              encoding:NSUTF8StringEncoding];
@@ -264,15 +276,15 @@ NSData *appleRootCert(void) {
 #pragma mark private method
 -(Payload_t *)payload {
     if (curentStage != kSignatureAppleTrue) {
-        return NO;
+        return NULL;
     }
     
     if (!receiptBinary) {
-        return NO;
+        return NULL;
     }
     
     if (!p7) {
-        return NO;
+        return NULL;
     }
     
     /* レシートのペイロードとそのサイズ*/
@@ -290,6 +302,14 @@ NSData *appleRootCert(void) {
     rval = asn_DEF_Payload.ber_decoder(NULL, &asn_DEF_Payload, (void **)&payload, pld, pld_sz, 0);
     
     return payload;
+}
+
+NSData *appleRootCert(void) {
+    // Obtain the Apple Inc. root certificate from http://www.apple.com/certificateauthority/
+    // Download the Apple Inc. Root Certificate ( http://www.apple.com/appleca/AppleIncRootCertificate.cer )
+    // Add the receipt to your app's resource bundle.
+    NSData *cert = [NSData dataWithContentsOfURL:[[NSBundle mainBundle] URLForResource:@"AppleIncRootCertificate" withExtension:@"cer"]];
+    return cert;
 }
 
 

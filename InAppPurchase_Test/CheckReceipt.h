@@ -21,11 +21,9 @@ typedef NS_ENUM (NSUInteger, ReceiptCheckStage) {
 {
     
 }
+
+@property(readonly,retain) NSArray *receiptDetail;
+
 -(BOOL)checkAll;
--(BOOL)checkPosition;
--(BOOL)checkSignature;
--(BOOL)checkBundleID;
--(BOOL)checkBundleVersion;
--(BOOL)checkGUID;
 
 @end

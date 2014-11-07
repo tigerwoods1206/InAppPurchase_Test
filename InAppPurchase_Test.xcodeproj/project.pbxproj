@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7646E3461A009ECD0078299D /* AppleIncRootCertificate.cer in Resources */ = {isa = PBXBuildFile; fileRef = 7646C8D81A009EA00078299D /* AppleIncRootCertificate.cer */; };
+		764C70681A0C7B730044D53E /* DecodeReceipt.m in Sources */ = {isa = PBXBuildFile; fileRef = 764C70671A0C7B730044D53E /* DecodeReceipt.m */; };
 		7688DBE31A00B3B90063D3FF /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7688DBE11A00B3B90063D3FF /* libcrypto.a */; };
 		7688DBE41A00B3B90063D3FF /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7688DBE21A00B3B90063D3FF /* libssl.a */; };
 		7688DC1D1A00C0640063D3FF /* asn_codecs_prim.c in Sources */ = {isa = PBXBuildFile; fileRef = 7688DBE81A00C0640063D3FF /* asn_codecs_prim.c */; };
@@ -36,6 +36,7 @@
 		7688DC361A00C0640063D3FF /* xer_encoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 7688DC191A00C0640063D3FF /* xer_encoder.c */; };
 		7688DC371A00C0640063D3FF /* xer_support.c in Sources */ = {isa = PBXBuildFile; fileRef = 7688DC1B1A00C0640063D3FF /* xer_support.c */; };
 		76E197351A00A19A008D7094 /* CheckReceipt.m in Sources */ = {isa = PBXBuildFile; fileRef = 76E197341A00A19A008D7094 /* CheckReceipt.m */; };
+		76E5A9331A09C48300C75BA0 /* AppleIncRootCertificate.cer in Resources */ = {isa = PBXBuildFile; fileRef = 76E5A9321A09C48300C75BA0 /* AppleIncRootCertificate.cer */; };
 		76F8666419FF57C600D373A2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 76F8666319FF57C600D373A2 /* main.m */; };
 		76F8666719FF57C600D373A2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 76F8666619FF57C600D373A2 /* AppDelegate.m */; };
 		76F8666A19FF57C600D373A2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76F8666919FF57C600D373A2 /* ViewController.m */; };
@@ -57,7 +58,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		7646C8D81A009EA00078299D /* AppleIncRootCertificate.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = AppleIncRootCertificate.cer; sourceTree = "<group>"; };
+		764C70661A0C7B730044D53E /* DecodeReceipt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DecodeReceipt.h; sourceTree = "<group>"; };
+		764C70671A0C7B730044D53E /* DecodeReceipt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DecodeReceipt.m; sourceTree = "<group>"; };
 		7688DBE11A00B3B90063D3FF /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcrypto.a; sourceTree = "<group>"; };
 		7688DBE21A00B3B90063D3FF /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libssl.a; sourceTree = "<group>"; };
 		7688DBE61A00C0640063D3FF /* asn_application.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = asn_application.h; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 		7688DC1C1A00C0640063D3FF /* xer_support.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xer_support.h; sourceTree = "<group>"; };
 		76E197331A00A19A008D7094 /* CheckReceipt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckReceipt.h; sourceTree = "<group>"; };
 		76E197341A00A19A008D7094 /* CheckReceipt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckReceipt.m; sourceTree = "<group>"; };
+		76E5A9321A09C48300C75BA0 /* AppleIncRootCertificate.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = AppleIncRootCertificate.cer; sourceTree = "<group>"; };
 		76F8665E19FF57C600D373A2 /* InAppPurchase_Test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InAppPurchase_Test.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		76F8666219FF57C600D373A2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		76F8666319FF57C600D373A2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -215,10 +218,10 @@
 		76F8665519FF57C600D373A2 = {
 			isa = PBXGroup;
 			children = (
+				76E5A9321A09C48300C75BA0 /* AppleIncRootCertificate.cer */,
 				7688DBE51A00C0640063D3FF /* asn */,
 				7688DBE11A00B3B90063D3FF /* libcrypto.a */,
 				7688DBE21A00B3B90063D3FF /* libssl.a */,
-				7646C8D81A009EA00078299D /* AppleIncRootCertificate.cer */,
 				76F8668719FF57D300D373A2 /* StoreKit.framework */,
 				76F8666019FF57C600D373A2 /* InAppPurchase_Test */,
 				76F8667A19FF57C600D373A2 /* InAppPurchase_TestTests */,
@@ -248,6 +251,8 @@
 				76F8666119FF57C600D373A2 /* Supporting Files */,
 				76E197331A00A19A008D7094 /* CheckReceipt.h */,
 				76E197341A00A19A008D7094 /* CheckReceipt.m */,
+				764C70661A0C7B730044D53E /* DecodeReceipt.h */,
+				764C70671A0C7B730044D53E /* DecodeReceipt.m */,
 			);
 			path = InAppPurchase_Test;
 			sourceTree = "<group>";
@@ -368,7 +373,7 @@
 				7688DC2F1A00C0640063D3FF /* payload_asn.txt in Resources */,
 				76F8666D19FF57C600D373A2 /* Main.storyboard in Resources */,
 				76F8667219FF57C600D373A2 /* LaunchScreen.xib in Resources */,
-				7646E3461A009ECD0078299D /* AppleIncRootCertificate.cer in Resources */,
+				76E5A9331A09C48300C75BA0 /* AppleIncRootCertificate.cer in Resources */,
 				76F8666F19FF57C600D373A2 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -412,6 +417,7 @@
 				7688DC321A00C0640063D3FF /* per_opentype.c in Sources */,
 				7688DC301A00C0640063D3FF /* per_decoder.c in Sources */,
 				7688DC2E1A00C0640063D3FF /* Payload.c in Sources */,
+				764C70681A0C7B730044D53E /* DecodeReceipt.m in Sources */,
 				7688DC291A00C0640063D3FF /* INTEGER.c in Sources */,
 				7688DC1F1A00C0640063D3FF /* ber_decoder.c in Sources */,
 				7688DC311A00C0640063D3FF /* per_encoder.c in Sources */,
