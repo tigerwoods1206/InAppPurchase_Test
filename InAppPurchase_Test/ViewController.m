@@ -7,8 +7,15 @@
 //
 
 #import "ViewController.h"
+#import "CheckReceipt.h"
+
+
 
 @interface ViewController ()
+{
+    NSArray *pays;
+    NSString *payment;
+}
 
 @end
 
@@ -16,6 +23,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    pays = @[ @"com.isao.inapppurchasetest.not_payment_item1",
+              @"com.isao.inapppurchasetest.not_payment_item2",
+              @"com.isao.inapppurchasetest.payment_item1",
+              @"com.isao.inapppurchasetest.payment_item2"
+              ];
+    payment = pays[0];
     // Do any additional setup after loading the view, typically from a nib.
 }
 
@@ -32,6 +45,36 @@
         [self startInAppPurchase];
     }
     
+}
+
+-(IBAction)view_ReceiptDetail:(id)sender
+{
+    CheckReceipt *chkr = [[CheckReceipt alloc] init];
+    [chkr checkAll];
+    NSArray *receiptarr = [chkr receiptDetail];
+    NSString *receiptMessage = [receiptarr description];
+    /*
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"レシートの中身です。"
+                                                    message:receiptMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:nil
+                                          otherButtonTitles:@"OK", nil];
+    [alert show];
+    */
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"レシートの中身です。"
+                                                                             message:receiptMessage
+                                                                      preferredStyle:UIAlertControllerStyleAlert];
+    
+    alertController.view.frame = [[UIScreen mainScreen] applicationFrame];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"OK"
+                                                        style:UIAlertActionStyleDefault
+                                                      handler:^(UIAlertAction *action){
+                                                        
+                                                      }]];
+    [self presentViewController:alertController animated:YES completion:nil];
+
 }
 
 
@@ -52,7 +95,7 @@
 - (void)startInAppPurchase
 {
     // com.companyname.application.productidは、「1-1. iTunes ConnectでManage In-App Purchasesの追加」で作成したProduct IDを設定します。
-    NSSet *set = [NSSet setWithObjects:@"com.isao.inapppurchasetest.not_payment_item1", nil];
+    NSSet *set = [NSSet setWithObjects:payment, nil];
     SKProductsRequest *productsRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:set];
     productsRequest.delegate = self;
     [productsRequest start];
@@ -142,5 +185,47 @@
 {
     [[SKPaymentQueue defaultQueue] removeTransactionObserver:self];
 }
+
+#pragma mark UIPickerView Delegate
+// デリゲートメソッドの実装
+// 列数を返す例
+-(NSInteger)numberOfComponentsInPickerView:(UIPickerView*)pickerView{
+    return 1; //列数は1つ
+}
+
+// 行数を返す例
+-(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    return [pays count];
+}
+
+/**
+ * ピッカーに表示する値を返す
+ */
+- (NSString *)pickerView:(UIPickerView *)pickerView
+             titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    switch (component) {
+        case 0: // 1列目
+            return pays[row];
+            break;
+        default:
+            return 0;
+            break;
+    }
+}
+
+-(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    switch (component) {
+        case 0: // 1列目
+            payment = pays[row];
+            break;
+        default:
+            break;
+    }
+}
+
+
 
 @end

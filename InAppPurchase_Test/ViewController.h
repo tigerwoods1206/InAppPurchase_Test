@@ -9,8 +9,10 @@
 #import <UIKit/UIKit.h>
 #import <StoreKit/StoreKit.h>
 
-@interface ViewController : UIViewController <SKProductsRequestDelegate,SKPaymentTransactionObserver>
+@interface ViewController : UIViewController <SKProductsRequestDelegate,SKPaymentTransactionObserver,UIPickerViewDelegate, UIPickerViewDataSource>
 
 -(IBAction)pay_syouhiItem:(id)sender;
+-(IBAction)pay_hisyouhiItem:(id)sender;
+-(IBAction)view_ReceiptDetail:(id)sender;
 @end
 
