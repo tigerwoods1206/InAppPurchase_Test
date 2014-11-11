@@ -10,6 +10,7 @@
 #import <StoreKit/StoreKit.h>
 
 @interface ViewController : UIViewController <SKProductsRequestDelegate,SKPaymentTransactionObserver,UIPickerViewDelegate, UIPickerViewDataSource>
+@property (weak, nonatomic) IBOutlet UIPickerView *payPicker;
 
 -(IBAction)pay_syouhiItem:(id)sender;
 -(IBAction)pay_hisyouhiItem:(id)sender;

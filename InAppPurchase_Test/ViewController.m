@@ -26,7 +26,9 @@
     pays = @[ @"com.isao.inapppurchasetest.not_payment_item1",
               @"com.isao.inapppurchasetest.not_payment_item2",
               @"com.isao.inapppurchasetest.payment_item1",
-              @"com.isao.inapppurchasetest.payment_item2"
+              @"com.isao.inapppurchasetest.payment_item2",
+              @"com.isao.inapppurchasetest.not_update_read",
+              @"com.isao.inapppurchasetest.payment_item3_2"
               ];
     payment = pays[0];
     // Do any additional setup after loading the view, typically from a nib.
@@ -128,7 +130,12 @@
     // 購入処理開始(「iTunes Storeにサインイン」ポップアップが表示)
     [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
     for (SKProduct *product in response.products) {
-        SKPayment *payment = [SKPayment paymentWithProduct:product];
+        SKMutablePayment *payment = [SKMutablePayment paymentWithProduct:product];
+        NSString *title = product.productIdentifier;
+        if ([product.productIdentifier compare:pays[5]]==NSOrderedSame) {
+            payment.quantity = 2;
+        }
+       
         [[SKPaymentQueue defaultQueue] addPayment:payment];
     }
 }
